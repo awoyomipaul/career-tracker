@@ -212,7 +212,7 @@ const TABLE_ORDER = ["networking", "job_apps", "grad_school", "grants", "article
 // ============================================================================
 const state = {
   user: null,
-  active: "job_apps",
+  active: "dashboard",
   cache: {},     // tableKey -> rows[]
   editing: null, // { table, id } or null for create
 };
@@ -229,6 +229,7 @@ const moduleEyebrow = el("module-eyebrow");
 const moduleTitle = el("module-title");
 const moduleDesc = el("module-desc");
 const tableWrap = el("table-wrap");
+const newRowBtn = el("new-row-btn");
 const modalBackdrop = el("modal-backdrop");
 const modalTitle = el("modal-title");
 const rowForm = el("row-form");
@@ -310,6 +311,14 @@ async function boot() {
 
 function buildNav() {
   railNav.innerHTML = "";
+
+  const dashBtn = document.createElement("button");
+  dashBtn.className = "rail-item";
+  dashBtn.dataset.key = "dashboard";
+  dashBtn.innerHTML = `<span>📊</span><span>Dashboard</span>`;
+  dashBtn.addEventListener("click", () => selectTable("dashboard"));
+  railNav.appendChild(dashBtn);
+
   TABLE_ORDER.forEach((key) => {
     const cfg = CONFIG[key];
     const btn = document.createElement("button");
@@ -331,6 +340,17 @@ async function loadTable(key) {
 function selectTable(key) {
   state.active = key;
   document.querySelectorAll(".rail-item").forEach((b) => b.classList.toggle("active", b.dataset.key === key));
+
+  if (key === "dashboard") {
+    moduleEyebrow.textContent = "Overview";
+    moduleTitle.textContent = "Dashboard";
+    moduleDesc.textContent = "Everything you and Ebunoluwa are tracking, in one place.";
+    newRowBtn.classList.add("hidden");
+    renderDashboard();
+    return;
+  }
+
+  newRowBtn.classList.remove("hidden");
   const cfg = CONFIG[key];
   moduleEyebrow.textContent = `${cfg.emoji} Module`;
   moduleTitle.textContent = cfg.label;
@@ -373,6 +393,7 @@ function renderTable(key) {
   const cols = cfg.listColumns;
   let html = `<table class="data-table"><thead><tr>`;
   cols.forEach((c) => { html += `<th>${fieldLabel(c, cfg)}</th>`; });
+  html += `<th class="col-actions">Actions</th>`;
   html += `</tr></thead><tbody>`;
 
   rows.forEach((row) => {
@@ -403,16 +424,131 @@ function renderTable(key) {
       }
       html += `<td data-label="${label}">${escapeHtml(row[c] ?? "")}</td>`;
     });
+    html += `<td class="col-actions" data-label="Actions">
+      <button type="button" class="row-action-btn edit-btn">Edit</button>
+      <button type="button" class="row-action-btn delete-btn">Delete</button>
+    </td>`;
     html += `</tr>`;
   });
   html += `</tbody></table>`;
   tableWrap.innerHTML = html;
 
   tableWrap.querySelectorAll("tbody tr").forEach((tr) => {
-    tr.addEventListener("click", () => {
-      const id = Number(tr.dataset.id);
-      const row = rows.find((r) => r.id === id);
+    const id = Number(tr.dataset.id);
+    const row = rows.find((r) => r.id === id);
+
+    tr.addEventListener("click", (e) => {
+      if (e.target.closest(".row-action-btn")) return;
       openModal("edit", key, row);
+    });
+
+    tr.querySelector(".edit-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      openModal("edit", key, row);
+    });
+
+    tr.querySelector(".delete-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      deleteEntry(key, row.id, cfg.label);
+    });
+  });
+}
+
+async function deleteEntry(table, id, label) {
+  if (!confirm(`Delete this ${label.toLowerCase()} entry? This can't be undone.`)) return;
+  try {
+    await api(`/${table}/${id}`, { method: "DELETE" });
+    await loadTable(table);
+    if (state.active === table) renderTable(table);
+    else if (state.active === "dashboard") renderDashboard();
+  } catch (err) {
+    alert(err.message || "Couldn't delete this entry.");
+  }
+}
+
+// ============================================================================
+// Dashboard
+// ============================================================================
+function renderDashboard() {
+  const totalRows = TABLE_ORDER.reduce((sum, k) => sum + (state.cache[k] || []).length, 0);
+
+  let cardsHtml = '<div class="dash-grid">';
+  TABLE_ORDER.forEach((key) => {
+    const cfg = CONFIG[key];
+    const rows = state.cache[key] || [];
+    let nextDeadline = null;
+    if (cfg.deadlineField) {
+      rows.forEach((r) => {
+        const raw = r[cfg.deadlineField];
+        if (!raw) return;
+        const d = new Date(raw);
+        if (isNaN(d.getTime())) return;
+        if (!nextDeadline || d < nextDeadline.date) nextDeadline = { date: d, raw };
+      });
+    }
+    const deadlineHtml = nextDeadline
+      ? (() => { const p = pulseFor(nextDeadline.raw); return `<div class="pulse-row"><span class="pulse-dot ${p.cls}"></span>Next: ${p.label}</div>`; })()
+      : `<span class="dash-card-sub">No dates tracked</span>`;
+    cardsHtml += `
+      <button type="button" class="dash-card" data-key="${key}">
+        <div class="dash-card-top"><span class="dash-card-emoji">${cfg.emoji}</span><span class="dash-card-count">${rows.length}</span></div>
+        <div class="dash-card-label">${cfg.label}</div>
+        ${deadlineHtml}
+      </button>`;
+  });
+  cardsHtml += "</div>";
+
+  const events = [];
+  TABLE_ORDER.forEach((key) => {
+    const cfg = CONFIG[key];
+    if (!cfg.deadlineField) return;
+    (state.cache[key] || []).forEach((row) => {
+      const raw = row[cfg.deadlineField];
+      if (!raw) return;
+      const d = new Date(raw);
+      if (isNaN(d.getTime())) return;
+      events.push({ key, cfg, row, date: d, raw });
+    });
+  });
+  events.sort((a, b) => a.date - b.date);
+
+  let listHtml;
+  if (events.length === 0) {
+    listHtml = `<div class="empty-state"><h3>No dates logged yet</h3><p>Deadlines you add across any module will show up here, soonest first.</p></div>`;
+  } else {
+    listHtml = '<div class="dash-events">';
+    events.slice(0, 25).forEach((e) => {
+      const p = pulseFor(e.raw);
+      const title = e.row[e.cfg.titleField] || "(untitled)";
+      listHtml += `
+        <div class="dash-event-row" data-key="${e.key}" data-id="${e.row.id}">
+          <span class="pulse-dot ${p.cls}"></span>
+          <span class="dash-event-date">${p.label}</span>
+          <span class="dash-event-table">${e.cfg.emoji} ${e.cfg.label}</span>
+          <span class="dash-event-title">${escapeHtml(title)}</span>
+          <span class="owner-chip">${escapeHtml(e.row.owner || "—")}</span>
+        </div>`;
+    });
+    listHtml += "</div>";
+  }
+
+  tableWrap.innerHTML = `
+    <div class="dash-wrap">
+      <div class="dash-summary-line">${totalRows} total entries tracked across 8 modules.</div>
+      ${cardsHtml}
+      <h3 class="dash-section-title">Upcoming &amp; overdue</h3>
+      ${listHtml}
+    </div>`;
+
+  tableWrap.querySelectorAll(".dash-card").forEach((btn) => {
+    btn.addEventListener("click", () => selectTable(btn.dataset.key));
+  });
+  tableWrap.querySelectorAll(".dash-event-row").forEach((rowEl) => {
+    rowEl.addEventListener("click", () => {
+      const key = rowEl.dataset.key;
+      const id = Number(rowEl.dataset.id);
+      const row = (state.cache[key] || []).find((r) => r.id === id);
+      if (row) openModal("edit", key, row);
     });
   });
 }
@@ -508,7 +644,8 @@ rowForm.addEventListener("submit", async (e) => {
       await api(`/${table}`, { method: "POST", body: JSON.stringify(body) });
     }
     await loadTable(table);
-    renderTable(table);
+    if (state.active === table) renderTable(table);
+    else if (state.active === "dashboard") renderDashboard();
     closeModal();
   } catch (err) {
     alert(err.message || "Couldn't save this entry.");
@@ -524,7 +661,8 @@ deleteRowBtn.addEventListener("click", async () => {
   try {
     await api(`/${table}/${id}`, { method: "DELETE" });
     await loadTable(table);
-    renderTable(table);
+    if (state.active === table) renderTable(table);
+    else if (state.active === "dashboard") renderDashboard();
     closeModal();
   } catch (err) {
     alert(err.message || "Couldn't delete this entry.");

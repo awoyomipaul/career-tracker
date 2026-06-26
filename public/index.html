@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Surface Area — Tomiwa &amp; Ebunoluwa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <p class="login-eyebrow">Surface Area</p>
+      <h1 class="login-title">Cast the lot.<br>Track the harvest.</h1>
+      <p class="login-sub">Your shared command centre for networking, applications, content &amp; opportunities.</p>
+
+      <form id="login-form">
+        <label class="field-label" for="name-select">Who's logging in?</label>
+        <div class="name-toggle" id="name-toggle">
+          <button type="button" class="name-btn" data-name="Tomiwa">Tomiwa</button>
+          <button type="button" class="name-btn" data-name="Ebunoluwa">Ebunoluwa</button>
+        </div>
+
+        <label class="field-label" for="passcode-input">Passcode</label>
+        <input id="passcode-input" type="password" autocomplete="current-password" placeholder="••••••••" required />
+
+        <button type="submit" class="btn-primary" id="login-submit">Enter</button>
+        <p class="login-error" id="login-error"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app" class="app hidden">
+    <aside class="rail">
+      <div class="rail-top">
+        <p class="wordmark">Surface Area</p>
+        <p class="wordmark-sub">Tomiwa &amp; Ebunoluwa</p>
+      </div>
+      <nav id="rail-nav" class="rail-nav"></nav>
+      <div class="rail-bottom">
+        <div class="who-badge" id="who-badge"></div>
+        <button class="btn-ghost" id="logout-btn">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="main-header">
+        <div>
+          <p class="module-eyebrow" id="module-eyebrow"></p>
+          <h1 class="module-title" id="module-title"></h1>
+          <p class="module-desc" id="module-desc"></p>
+        </div>
+        <button class="btn-primary" id="new-row-btn">+ New entry</button>
+      </header>
+
+      <div id="table-wrap" class="table-wrap"></div>
+    </main>
+  </div>
+
+  <!-- FORM MODAL -->
+  <div id="modal-backdrop" class="modal-backdrop hidden">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="modal-title">New entry</h2>
+        <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <form id="row-form" class="row-form"></form>
+      <div class="modal-foot">
+        <button type="button" class="btn-danger hidden" id="delete-row-btn">Delete</button>
+        <div class="modal-foot-right">
+          <button type="button" class="btn-ghost" id="cancel-row-btn">Cancel</button>
+          <button type="submit" form="row-form" class="btn-primary" id="save-row-btn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

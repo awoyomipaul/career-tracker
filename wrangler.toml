@@ -9,4 +9,4 @@ binding = "ASSETS"
 [[d1_databases]]
 binding = "DB"
 database_name = "career_tracker_db"
-database_id = "REPLACE_WITH_YOUR_DATABASE_ID"
+database_id = "87af001e-d593-49c1-aa5f-a85bb73e55be"

@@ -517,6 +517,30 @@ th.col-actions, td.col-actions { width: 1%; white-space: nowrap; }
   gap: 14px;
 }
 
+.view-content {
+  padding: 18px 22px;
+  overflow-y: auto;
+  flex: 1;
+  display: grid;
+  gap: 14px;
+}
+.view-field-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--graphite-soft);
+  margin-bottom: 4px;
+}
+.view-field-value {
+  font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.45;
+}
+.view-empty { color: var(--graphite-soft); }
+.view-multiline { white-space: pre-wrap; }
+
 .form-field label {
   display: block;
   font-size: 12px;

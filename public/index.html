@@ -70,11 +70,19 @@
         <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
       </div>
       <form id="row-form" class="row-form"></form>
-      <div class="modal-foot">
+      <div id="view-content" class="view-content hidden"></div>
+      <div class="modal-foot" id="edit-foot">
         <button type="button" class="btn-danger hidden" id="delete-row-btn">Delete</button>
         <div class="modal-foot-right">
           <button type="button" class="btn-ghost" id="cancel-row-btn">Cancel</button>
           <button type="submit" form="row-form" class="btn-primary" id="save-row-btn">Save</button>
+        </div>
+      </div>
+      <div class="modal-foot hidden" id="view-foot">
+        <div></div>
+        <div class="modal-foot-right">
+          <button type="button" class="btn-ghost" id="view-close-btn">Close</button>
+          <button type="button" class="btn-primary" id="view-edit-btn">Edit</button>
         </div>
       </div>
     </div>

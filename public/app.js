@@ -14,13 +14,13 @@ const CONFIG = {
       { key: "title_role", label: "Title / role", type: "text" },
       { key: "company_org", label: "Company / org", type: "text" },
       { key: "industry", label: "Industry", type: "text" },
-      { key: "channel", label: "Channel", type: "text", list: ["LinkedIn", "Email", "Phone", "Text", "Call", "In-Person"] },
+      { key: "channel", label: "Channel", type: "select", options: ["LinkedIn", "Email", "Phone", "Text", "Call", "In-Person"] },
       { key: "contact_info", label: "Contact info (handle / email / number)", type: "text" },
       { key: "connection_source", label: "Connection source", type: "text" },
       { key: "first_outreach_date", label: "First outreach date", type: "date" },
       { key: "last_contact_date", label: "Last contact date", type: "date" },
       { key: "follow_up_date", label: "Follow-up date", type: "date" },
-      { key: "status", label: "Status", type: "text", list: ["Not Started", "Message Sent", "Replied", "Call Scheduled", "Closed"] },
+      { key: "status", label: "Status", type: "select", options: ["Not Started", "Message Sent", "Replied", "Call Scheduled", "Closed"] },
       { key: "purpose", label: "Purpose", type: "textarea" },
       { key: "relationship_strength", label: "Relationship strength (1–5)", type: "number", min: 1, max: 5 },
       { key: "owner", label: "Owner", type: "select", options: OWNER_OPTIONS },
@@ -38,12 +38,12 @@ const CONFIG = {
       { key: "company", label: "Company", type: "text" },
       { key: "role_title", label: "Role / title", type: "text" },
       { key: "location", label: "Location", type: "text" },
-      { key: "job_type", label: "Job type", type: "text", list: ["Full-Time", "Part-Time", "Contract", "Internship"] },
-      { key: "source", label: "Source", type: "text", list: ["LinkedIn", "Website", "Referral", "JobMag"] },
+      { key: "job_type", label: "Job type", type: "select", options: ["Full-Time", "Part-Time", "Contract", "Internship"] },
+      { key: "source", label: "Source", type: "select", options: ["LinkedIn", "Website", "Referral", "JobMag"] },
       { key: "job_url", label: "Job URL", type: "text" },
       { key: "date_applied", label: "Date applied", type: "date" },
       { key: "application_deadline", label: "Application deadline", type: "date" },
-      { key: "status", label: "Status", type: "text", list: ["Wishlist", "Applied", "Assessment", "Interview", "Offer", "Rejected"] },
+      { key: "status", label: "Status", type: "select", options: ["Wishlist", "Applied", "Assessment", "Interview", "Offer", "Rejected"] },
       { key: "salary_range", label: "Salary range", type: "text" },
       { key: "contact_recruiter", label: "Contact / recruiter", type: "text" },
       { key: "resume_version", label: "Resume version", type: "text" },
@@ -64,14 +64,14 @@ const CONFIG = {
       { key: "university", label: "University", type: "text" },
       { key: "program_degree", label: "Program / degree", type: "text" },
       { key: "country", label: "Country", type: "text" },
-      { key: "degree_level", label: "Degree level", type: "text", list: ["MSc", "MBA", "MPA", "MA", "PhD"] },
+      { key: "degree_level", label: "Degree level", type: "select", options: ["MSc", "MBA", "MPA", "MA", "PhD"] },
       { key: "application_deadline", label: "Application deadline", type: "date" },
       { key: "date_submitted", label: "Date submitted", type: "date" },
-      { key: "status", label: "Status", type: "text", list: ["Researching", "Preparing", "Submitted", "Interview", "Accepted", "Rejected", "Waitlisted"] },
+      { key: "status", label: "Status", type: "select", options: ["Researching", "Preparing", "Submitted", "Interview", "Accepted", "Rejected", "Waitlisted"] },
       { key: "tuition_funding", label: "Tuition / funding", type: "text" },
       { key: "scholarship_available", label: "Scholarship available?", type: "text" },
       { key: "gre_gmat_required", label: "GRE/GMAT required?", type: "select", options: ["Yes", "No"] },
-      { key: "sop_status", label: "SOP status", type: "text", list: ["Not Started", "Drafting", "Submitted"] },
+      { key: "sop_status", label: "SOP status", type: "select", options: ["Not Started", "Drafting", "Submitted"] },
       { key: "lor_status", label: "LOR status (# secured/needed)", type: "text" },
       { key: "transcript_status", label: "Transcript status", type: "text" },
       { key: "interview_date", label: "Interview date", type: "date" },
@@ -88,15 +88,15 @@ const CONFIG = {
     fields: [
       { key: "program_name", label: "Grant / program name", type: "text" },
       { key: "organisation_funder", label: "Organisation / funder", type: "text" },
-      { key: "type", label: "Type", type: "text", list: ["Grant", "Fellowship", "Scholarship", "Accelerator", "Residency", "Prize"] },
+      { key: "type", label: "Type", type: "select", options: ["Grant", "Fellowship", "Scholarship", "Accelerator", "Residency", "Prize"] },
       { key: "amount_value", label: "Amount / value", type: "text" },
       { key: "eligibility_notes", label: "Eligibility notes", type: "textarea" },
       { key: "application_deadline", label: "Application deadline", type: "date" },
       { key: "date_applied", label: "Date applied", type: "date" },
-      { key: "status", label: "Status", type: "text", list: ["Researching", "Preparing", "Applied", "Awarded", "Rejected"] },
+      { key: "status", label: "Status", type: "select", options: ["Researching", "Preparing", "Applied", "Awarded", "Rejected"] },
       { key: "documents_required", label: "Documents required", type: "text" },
       { key: "lors_needed", label: "LORs needed?", type: "text" },
-      { key: "essay_status", label: "Essay / proposal status", type: "text", list: ["Not Started", "Drafting", "Submitted"] },
+      { key: "essay_status", label: "Essay / proposal status", type: "select", options: ["Not Started", "Drafting", "Submitted"] },
       { key: "decision_date", label: "Decision date", type: "date" },
       { key: "owner", label: "Owner", type: "select", options: OWNER_OPTIONS },
       { key: "link_url", label: "Link / URL", type: "text" },
@@ -112,10 +112,10 @@ const CONFIG = {
       { key: "title", label: "Article title / working title", type: "text" },
       { key: "platform", label: "Platform / publication", type: "text" },
       { key: "category_topic", label: "Category / topic", type: "text" },
-      { key: "format", label: "Format", type: "text", list: ["Essay", "Op-ed", "Newsletter", "Blog Post", "Research Piece"] },
+      { key: "format", label: "Format", type: "select", options: ["Essay", "Op-ed", "Newsletter", "Blog Post", "Research Piece"] },
       { key: "target_audience", label: "Target audience", type: "text" },
       { key: "target_word_count", label: "Target word count", type: "number" },
-      { key: "status", label: "Status", type: "text", list: ["Idea", "Outline", "Drafting", "Editing", "Submitted", "Published"] },
+      { key: "status", label: "Status", type: "select", options: ["Idea", "Outline", "Drafting", "Editing", "Submitted", "Published"] },
       { key: "idea_date", label: "Idea date", type: "date" },
       { key: "draft_due_date", label: "Draft due date", type: "date" },
       { key: "submit_publish_date", label: "Submit / publish date", type: "date" },
@@ -135,11 +135,11 @@ const CONFIG = {
     listColumns: ["post_topic", "content_pillar", "status", "planned_post_date", "owner", "notes"],
     fields: [
       { key: "post_topic", label: "Post topic / hook (first line)", type: "textarea" },
-      { key: "post_type", label: "Post type", type: "text", list: ["Text Post", "Carousel", "Poll", "Video", "Repost"] },
+      { key: "post_type", label: "Post type", type: "select", options: ["Text Post", "Carousel", "Poll", "Video", "Repost"] },
       { key: "content_pillar", label: "Content pillar / theme", type: "text" },
       { key: "target_audience", label: "Target audience", type: "text" },
       { key: "draft_caption", label: "Draft / caption", type: "textarea" },
-      { key: "status", label: "Status", type: "text", list: ["Idea", "Drafting", "Draft Ready", "Scheduled", "Posted"] },
+      { key: "status", label: "Status", type: "select", options: ["Idea", "Drafting", "Draft Ready", "Scheduled", "Posted"] },
       { key: "planned_post_date", label: "Planned post date", type: "date" },
       { key: "date_posted", label: "Date posted", type: "date" },
       { key: "post_url", label: "Post URL (when live)", type: "text" },
@@ -166,7 +166,7 @@ const CONFIG = {
       { key: "modules_completed", label: "Modules completed", type: "number" },
       { key: "percent_complete", label: "% complete (0–1)", type: "number", step: "0.01" },
       { key: "current_module", label: "Current module / topic", type: "text" },
-      { key: "status", label: "Status", type: "text", list: ["Not Started", "In Progress", "Completed"] },
+      { key: "status", label: "Status", type: "select", options: ["Not Started", "In Progress", "Completed"] },
       { key: "start_date", label: "Start date", type: "date" },
       { key: "target_completion", label: "Target completion", type: "date" },
       { key: "date_completed", label: "Date completed", type: "date" },
@@ -192,7 +192,7 @@ const CONFIG = {
       { key: "year", label: "Year", type: "number" },
       { key: "source_link", label: "Source / link", type: "text" },
       { key: "format", label: "Format", type: "select", options: ["Physical", "eBook", "PDF"] },
-      { key: "status", label: "Status", type: "text", list: ["Want to Read", "Reading", "Finished"] },
+      { key: "status", label: "Status", type: "select", options: ["Want to Read", "Reading", "Finished"] },
       { key: "start_date", label: "Start date", type: "date" },
       { key: "date_finished", label: "Date finished", type: "date" },
       { key: "current_chapter", label: "Current chapter / page", type: "text" },
@@ -390,7 +390,7 @@ function renderTable(key) {
     return;
   }
 
-  const cols = cfg.listColumns;
+  const cols = cfg.listColumns.filter((c) => c !== cfg.subtitleField);
   let html = `<table class="data-table"><thead><tr>`;
   cols.forEach((c) => { html += `<th>${fieldLabel(c, cfg)}</th>`; });
   html += `<th class="col-actions">Actions</th>`;
@@ -408,7 +408,6 @@ function renderTable(key) {
         html += `</td>`;
         return;
       }
-      if (c === cfg.subtitleField) return; // already shown under title
       if (c === cfg.deadlineField) {
         const p = pulseFor(row[c]);
         html += `<td data-label="${label}"><div class="pulse-row"><span class="pulse-dot ${p.cls}"></span>${p.label}</div></td>`;
@@ -439,7 +438,7 @@ function renderTable(key) {
 
     tr.addEventListener("click", (e) => {
       if (e.target.closest(".row-action-btn")) return;
-      openModal("edit", key, row);
+      openViewCard(key, row);
     });
 
     tr.querySelector(".edit-btn").addEventListener("click", (e) => {
@@ -548,7 +547,7 @@ function renderDashboard() {
       const key = rowEl.dataset.key;
       const id = Number(rowEl.dataset.id);
       const row = (state.cache[key] || []).find((r) => r.id === id);
-      if (row) openModal("edit", key, row);
+      if (row) openViewCard(key, row);
     });
   });
 }
@@ -563,8 +562,14 @@ function escapeHtml(str) {
 function openModal(mode, key, row) {
   const cfg = CONFIG[key];
   state.editing = mode === "edit" ? { table: key, id: row.id } : { table: key, id: null };
+  state.editingRow = row;
   modalTitle.textContent = mode === "edit" ? `Edit ${cfg.label.toLowerCase()} entry` : `New ${cfg.label.toLowerCase()} entry`;
   deleteRowBtn.classList.toggle("hidden", mode !== "edit");
+
+  el("view-content").classList.add("hidden");
+  el("view-foot").classList.add("hidden");
+  rowForm.classList.remove("hidden");
+  el("edit-foot").classList.remove("hidden");
 
   rowForm.innerHTML = "";
   cfg.fields.forEach((f) => {
@@ -581,10 +586,6 @@ function openModal(mode, key, row) {
       inputHtml = `<input type="number" name="${f.key}" value="${escapeHtml(value)}" ${f.min !== undefined ? `min="${f.min}"` : ""} ${f.max !== undefined ? `max="${f.max}"` : ""} ${f.step ? `step="${f.step}"` : ""} />`;
     } else if (f.type === "date") {
       inputHtml = `<input type="date" name="${f.key}" value="${escapeHtml(toDateInputValue(value))}" />`;
-    } else if (f.list) {
-      const listId = `list-${key}-${f.key}`;
-      const opts = f.list.map((o) => `<option value="${o}"></option>`).join("");
-      inputHtml = `<input type="text" name="${f.key}" value="${escapeHtml(value)}" list="${listId}" /><datalist id="${listId}">${opts}</datalist>`;
     } else {
       inputHtml = `<input type="text" name="${f.key}" value="${escapeHtml(value)}" />`;
     }
@@ -598,6 +599,48 @@ function openModal(mode, key, row) {
     note.textContent = `Created by ${row.created_by || "—"} on ${formatTs(row.created_at)} · Last edited by ${row.updated_by || "—"} on ${formatTs(row.updated_at)}`;
     rowForm.appendChild(note);
   }
+
+  modalBackdrop.classList.remove("hidden");
+}
+
+function buildViewHtml(cfg, row) {
+  let html = "";
+  cfg.fields.forEach((f) => {
+    const raw = row[f.key];
+    let displayVal;
+    if (raw === null || raw === undefined || raw === "") {
+      displayVal = `<span class="view-empty">—</span>`;
+    } else if (f.type === "date") {
+      displayVal = escapeHtml(formatTs(raw));
+    } else if (f.key === "owner") {
+      displayVal = `<span class="owner-chip">${escapeHtml(raw)}</span>`;
+    } else if (f.type === "textarea") {
+      displayVal = `<span class="view-multiline">${escapeHtml(raw)}</span>`;
+    } else {
+      displayVal = escapeHtml(raw);
+    }
+    html += `<div class="view-field"><span class="view-field-label">${f.label}</span><div class="view-field-value">${displayVal}</div></div>`;
+  });
+  return html;
+}
+
+function openViewCard(key, row) {
+  const cfg = CONFIG[key];
+  state.editing = { table: key, id: row.id };
+  state.editingRow = row;
+  modalTitle.textContent = row[cfg.titleField] || `${cfg.label} entry`;
+
+  rowForm.classList.add("hidden");
+  el("edit-foot").classList.add("hidden");
+
+  const viewContent = el("view-content");
+  let html = buildViewHtml(cfg, row);
+  if (row.created_by || row.updated_by) {
+    html += `<p class="audit-note">Created by ${escapeHtml(row.created_by || "—")} on ${formatTs(row.created_at)} · Last edited by ${escapeHtml(row.updated_by || "—")} on ${formatTs(row.updated_at)}</p>`;
+  }
+  viewContent.innerHTML = html;
+  viewContent.classList.remove("hidden");
+  el("view-foot").classList.remove("hidden");
 
   modalBackdrop.classList.remove("hidden");
 }
@@ -619,10 +662,17 @@ function formatTs(v) {
 function closeModal() {
   modalBackdrop.classList.add("hidden");
   state.editing = null;
+  state.editingRow = null;
 }
 
 el("modal-close").addEventListener("click", closeModal);
 el("cancel-row-btn").addEventListener("click", closeModal);
+el("view-close-btn").addEventListener("click", closeModal);
+el("view-edit-btn").addEventListener("click", () => {
+  const { table } = state.editing;
+  const row = state.editingRow;
+  openModal("edit", table, row);
+});
 modalBackdrop.addEventListener("click", (e) => { if (e.target === modalBackdrop) closeModal(); });
 
 el("new-row-btn").addEventListener("click", () => openModal("create", state.active, null));
